@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lawtus/addingpage.dart';
 import 'package:lawtus/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lawtus/signinpage.dart';
 import 'firebase_options.dart';
 
 
@@ -10,6 +12,7 @@ void main()async {
   try
 {  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,);
+  await FirebaseAuth.instance.signInAnonymously();
 }catch(e){
   print(e);
 }
@@ -26,7 +29,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Samsung'
       ),
-      home: Homepage(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if(snapshot.connectionState==ConnectionState.waiting)
+          return CircularProgressIndicator();
+          if(snapshot.hasData)
+          return Homepage();
+          return Signinpage();
+        },
+      ),
     );
   }
 }

@@ -1,12 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lawtus/chewie.dart';
+import 'package:lawtus/firebase.dart';
 import 'package:video_player/video_player.dart';
 
 class videopage extends StatelessWidget {
   final String videourl;
   final String name;
   final String topic;
-  const videopage({required this.name,required this.videourl,required this.topic, super.key});
+  final String videoid;
+  const videopage({required this.name,required this.videourl,required this.topic,required this.videoid, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,7 @@ class videopage extends StatelessWidget {
               videoplayer(
                   videoplayercontroller: VideoPlayerController.networkUrl(Uri.parse(videourl)),
                   looping: true,
+                  videoid: videoid,
           
               ),
               SizedBox(height: 20,),
