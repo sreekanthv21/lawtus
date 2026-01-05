@@ -1,4 +1,4 @@
-package com.example.lawtus
+package app.lawtus.learn
 
 import io.flutter.embedding.android.FlutterActivity
 

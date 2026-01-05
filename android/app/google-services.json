@@ -7,9 +7,47 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:19991173878:android:be35393ab54251ce6faad7",
+        "android_client_info": {
+          "package_name": "app.lawtus.learn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKM1Xay-tjMQe0GUzQ3oQH2O3DTzZ9Mso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:19991173878:android:463b2e3ae5248b846faad7",
         "android_client_info": {
           "package_name": "com.example.lawtus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKM1Xay-tjMQe0GUzQ3oQH2O3DTzZ9Mso"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19991173878:android:53adbb41da6702186faad7",
+        "android_client_info": {
+          "package_name": "com.example.lawtustutor"
         }
       },
       "oauth_client": [],

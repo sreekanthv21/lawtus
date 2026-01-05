@@ -1,9 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:lawtus/card.dart';
-import 'package:lawtus/firebase.dart';
-import 'package:lawtus/videopage.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:hive_flutter/adapters.dart';
+import 'package:lawtus/History.dart';
+
+import 'package:lawtus/coursespage.dart';
+
+
+
+import 'package:lawtus/homepage1.dart';
+import 'package:lawtus/items.dart';
+import 'package:lawtus/profilepage.dart';
+
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -12,98 +22,125 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
 }
 
-class _HomepageState extends State<Homepage> {
+class _HomepageState extends State<Homepage> with TickerProviderStateMixin {
+
+  PageController pagecontroller=PageController();
+
+  late Animation<Color?> coloranim1;
+  late Animation<Color?> coloranim2;
+
+  late Animation<Color?> iconcoloranim1;
+  late Animation<Color?> iconcoloranim2;
+ 
+  late AnimationController controller1;
+
+  final ValueNotifier selectedpage=ValueNotifier(0);
+  
+  String? Name;
+  late final pref;
+  @override
+  void initState(){
+    super.initState();
+
+    controller1=AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 400)
+    );
+   
+    coloranim1=ColorTween(begin: const Color.fromARGB(255, 0, 0, 0),end: Colors.white).animate(controller1);
+    coloranim2=ColorTween(begin: Colors.white,end: const Color.fromARGB(255, 0, 0, 0)).animate(controller1);
+    
+    iconcoloranim1=ColorTween(begin: const Color.fromARGB(255, 255, 255, 255),end: const Color.fromARGB(255, 0, 0, 0)).animate(controller1);
+    iconcoloranim2=ColorTween(begin: const Color.fromARGB(255, 0, 0, 0),end: const Color.fromARGB(255, 255, 255, 255)).animate(controller1);
+    
+  }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+ 
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text('Dashboard', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 10,),
-            Text('Latest lectures',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
-            SizedBox(height: 10,),
-            Container(
-              height: 260,
-              width: double.infinity,
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('user').listenable(),
+      builder: (context, value, child) {
+        if(Hive.box('user').get('username')==null || Hive.box('user').get('batch')==null){
+          return Scaffold(backgroundColor: Colors.white,);
+        }
+        return Scaffold(
+          key: _scaffoldKey,
+          
+          
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              
+              
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 255, 255)
+                
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 164, 164, 164),
+                    spreadRadius: 1,
+                    offset: Offset(0, 15),
+                    blurRadius: 30
+                  )
+                ],
+                color:Color(0xFF7A0045),
+                borderRadius: BorderRadius.circular(16)
               ),
-              child: FutureBuilder(
-                future: FirebaseFirestore.instance.collection('videos').where('showinnew',isEqualTo: true).get(),
-                builder: (context, snapshot) {
-                  if(snapshot.connectionState==ConnectionState.waiting){
-                    return Align(child: Container());
-                  }
-                  if(snapshot.hasData==false){
-                    return Center(child: Text('Nothing'),);
-                  }
-                  
-                  if(snapshot.hasData)
-                  print(snapshot.data!.docs.length);
-                  {return Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                            
-                            
-                        var dataAcquired=snapshot.data!.docs[index].data();
-                      
+              child: ValueListenableBuilder(
+                valueListenable: selectedpage,
+                builder: (context, value, child) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: List.generate(
+                      4,
+                      (index){
                         return GestureDetector(
-                          onTap:() {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>videopage(name: dataAcquired['name'],videourl: dataAcquired['videourl'],topic: dataAcquired['topic'],videoid: snapshot.data!.docs[index].id,),));
-                           
+                          onTap: () {
+                            selectedpage.value=index;
+                            pagecontroller.jumpToPage(index);
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: card(img: snapshot.data!.docs[index].data()['img'], name: dataAcquired['name'], topic: dataAcquired['topic']),
+                            padding: const EdgeInsets.all(20.0),
+                            child: SvgPicture.asset(icons[index],color: selectedpage.value==index?Colors.white:const Color.fromARGB(152, 255, 255, 255),),
                           ));
-                    },
-                    ),
-                  );}
-                  
-                },
+                      }
+                    )
+                  );
+                }
               ),
             ),
-            SizedBox(height: 15,),
-            Text('Recently watched',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500)),
-            SizedBox(height: 20,),
-            Container(
-              height: 260,
-              child: StreamBuilder(
-                stream:getdataforrecwatched(uid: FirebaseAuth.instance.currentUser!.uid) ,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState==ConnectionState.waiting)
-                  return Center(child: CircularProgressIndicator(),);
-                  if (snapshot.hasData)
-                  {return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (context, index) {
-                      var dataAcquired=snapshot.data!.docs[index].data();
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: card(img: dataAcquired['img'], name: dataAcquired['name'], topic: dataAcquired['topic']),
-                      );
-                      
-                    },
-                  );}
-                  return Text('Nothing');
-                },
-              ),
-            )
-
+          ),
+          
+        body: PageView(
+          controller: pagecontroller,
+          pageSnapping: true,
+          onPageChanged: (pgno) {
+            selectedpage.value=pgno;
+            
+          },
+          children: [
+            homepage1(),
+            historypage(),
+            coursespage(),
+            profilepage(),
           ],
         ),
-      ),
-
+        
+        );
+      }
     );
   }
+
+  
+
+  
+  
+
+  
 }
