@@ -108,17 +108,41 @@ class _MyWidgetState extends State<homepage1> {
                                   builder: (context,constraints) {
                                     final containerwidth = constraints.maxWidth;
                                     final eachone = (containerwidth-44)/5;
-                                    return ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: 6,
-                                      itemBuilder: (context, index) {
-                                        return Row(
-                                          children: [
-                                            tutors('lib/assets/image/tutor1.jpg', 'Anamika', eachone),
-                                            SizedBox(width: 11,)
-                                          ],
+                                    return ValueListenableBuilder(
+                                      valueListenable: context.read<generator1>().alertinfoUpdated,
+                                      builder: (context, value, child) {
+                                        if(context.read<generator1>().isloading){
+                                          return ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: 5,
+                                            itemBuilder: (context, index) {
+                                              return Row(
+                                                children: [
+                                                  tutors(false, false, eachone),
+                                                  SizedBox(width: 11,)
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+
+                                        Map facultyinfo=context.read<generator1>().facultyinfo;
+
+                                        List facultykeys=facultyinfo.keys.toList();
+
+                                        return ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: facultykeys.length,
+                                          itemBuilder: (context, index) {
+                                            return Row(
+                                              children: [
+                                                tutors(facultyinfo[facultykeys[index]], facultykeys[index], eachone),
+                                                SizedBox(width: 11,)
+                                              ],
+                                            );
+                                          },
                                         );
-                                      },
+                                      }
                                     );
                                   }
                                 ),

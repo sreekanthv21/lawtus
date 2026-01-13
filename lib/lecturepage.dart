@@ -209,7 +209,7 @@ class _lecturepageState extends State<lecturepage> {
                                       valueListenable: context.read<generator2>().videoinfoUpdated,
                                       builder: (context, value, child) {
                                         final videoinfo=context.read<generator2>().gotinfo;
-                                        final recwatchedinfo=(context.read<generator2>().recwatchedinfo)['recwatched'];
+                                        final recwatchedinfo=(context.read<generator2>().recwatchedinfo)['recwatched']??[];
                                       
                                         List refinedvideoinfo=[];
                                         for(int i=0;i<videoinfo.length;i++){

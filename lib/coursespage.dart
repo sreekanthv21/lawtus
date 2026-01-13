@@ -34,10 +34,10 @@ class _coursespageState extends State<coursespage> {
               SizedBox(height: 20,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('My courses',style: TextStyle(fontSize: 20,letterSpacing: 0,height: 0),),
-                  Text('See All',style: TextStyle(fontSize: 16,letterSpacing: 0,height: 0,color: Color(0xFF333333)),),
+                  Text('My course',style: TextStyle(fontSize: 20,letterSpacing: 0,height: 0),),
+                  
                 ],
               ),
               SizedBox(height: 15,),

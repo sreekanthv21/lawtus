@@ -113,46 +113,72 @@ class _historypageState extends State<historypage> {
                         child: Text('Recently viewed',style: TextStyle(fontSize: 32,color: Color(0xFF333333),fontWeight: FontWeight.bold,letterSpacing: -1),),
                       ),
                       SizedBox(height: 20,),
-                      SizedBox(
-                       
-                        height: containerwidth*0.7*(10/16)+55,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: ValueListenableBuilder(
-                            valueListenable: context.read<generator2>().videoinfoUpdated,
-                            builder: (context, value, child) {
-                          
-                              if(context.read<generator2>().isLoading){
-                                return Center(child: CircularProgressIndicator());
-                              }
-                              Map videos={};
-                              List recwatched=[];
-                          
-                              videos= context.read<generator2>().gotinfo;
-                              recwatched=context.read<generator2>().recwatchedinfo['recwatched'];
-                              final recdocstemp=context.read<generator2>().recwatchedinfo['recdocs'];
-                              
-                              fetchinfo(recdocstemp);
-                          
-                              if(recwatched.isEmpty){
-                                return Center(child: Text('Nothing viewed yet'),);
-                              }
-                              //make a new list of videos of certain batch and recwatched
-                              List filteredlistvideos=[];
-                              List tillwatched=[];
-                              for(int i=0;i<recwatched.length;i++){
-                                videos.forEach(
-                                  (key,value){
-                                    if(value['batch'].contains(Hive.box('user').get('batch')) && value['uuid']==recwatched[i]['uuid']){
-                                      tillwatched.add(recwatched[i]['time']);
-                                      filteredlistvideos.add(value);
-                                    }
-                                  }
-                                );
-                              }
-                              
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ValueListenableBuilder(
+                          valueListenable: context.read<generator2>().videoinfoUpdated,
+                          builder: (context, value, child) {
+                        
+                            if(context.read<generator2>().isLoading){
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            Map videos={};
+                            List recwatched=[];
+                            List recdocstemp=[];
+                        
+                            videos= context.read<generator2>().gotinfo;
+                            recwatched=context.read<generator2>().recwatchedinfo['recwatched']??[];
+                            recdocstemp=context.read<generator2>().recwatchedinfo['recdocs']??[];
                             
-                              return ListView.builder(
+                            fetchinfo(recdocstemp);
+
+                          
+                        
+                            if(recwatched.isEmpty && recdocstemp.isEmpty){
+                              return Center(
+                                child: SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.7,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: const [
+                                      Icon(Icons.history, size: 48, color: Color(0xFFBEBAB3)),
+                                      SizedBox(height: 12),
+                                      Text(
+                                        'Nothing viewed yet',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Color(0xFF78746D),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+
+                            if(recwatched.isEmpty ){
+                              return SizedBox.shrink();
+                            }
+                            //make a new list of videos of certain batch and recwatched
+                            List filteredlistvideos=[];
+                            List tillwatched=[];
+                            for(int i=0;i<recwatched.length;i++){
+                              videos.forEach(
+                                (key,value){
+                                  if(value['batch'].contains(Hive.box('user').get('batch')) && value['uuid']==recwatched[i]['uuid']){
+                                    tillwatched.add(recwatched[i]['time']);
+                                    filteredlistvideos.add(value);
+                                  }
+                                }
+                              );
+                            }
+                            
+                            
+                          
+                            return SizedBox(
+                              height: containerwidth*0.7*(10/16)+55,
+                              child: ListView.builder(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 itemCount: filteredlistvideos.length,
@@ -222,15 +248,18 @@ class _historypageState extends State<historypage> {
                                     ),
                                   );
                                 },
-                              );
-                            }
-                          ),
+                              ),
+                            );
+                          }
                         ),
                       ),
                       SizedBox(height: 10,),
                       ValueListenableBuilder(
                         valueListenable: filtereddocsupdated,
                         builder: (context, value, child) {
+                          if(filtereddocs.isEmpty){
+                            return SizedBox.shrink();
+                          }
                          
                           return Column(
                             children: List.generate(

@@ -127,6 +127,7 @@ class generator1 extends ChangeNotifier{
       
       final facultyinforaw=await FirebaseFirestore.instance.collection('faculties').get();
       facultyinfo=facultyinforaw.docs[0].data();
+      alertinfoUpdated.value = !alertinfoUpdated.value;
       hasfacultiesloaded=true;
       notifyListeners();
 

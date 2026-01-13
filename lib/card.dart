@@ -251,21 +251,33 @@ Future<dynamic> dialogs(BuildContext context,{required String title,required Str
           ExtendedImage.network(
             shape: BoxShape.circle,
             fit: BoxFit.cover,
+            height: eachone,
+            width: eachone,
             cache: false,
             'https://lawtusbackend.onrender.com/getimg?dir=${image}',
             loadStateChanged: (state) {
               switch(state.extendedImageLoadState){
                 case LoadState.loading:
-                return Center(child: SizedBox(width: 30,height: 30,child: CircularProgressIndicator(color: Color(0xFF7A0045),)));
+                return Image.asset('lib/assets/image/loadinggrey.png');
                 case LoadState.completed:
                 return null;
                 case LoadState.failed:
-                return Center(child: Icon(Icons.error),);
+                return Image.asset('lib/assets/image/loadinggrey.png');
               }
             },
             
           
           ),
+          SizedBox(height: 0,),
+          if((name is String)==false)
+          Container(
+            height: 20,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Color.fromARGB(142, 217, 217, 217)
+            ),
+          ),
+          if(name is String)
           Text(name,style: TextStyle(fontSize: 16,fontFamily: 'afacad',overflow: TextOverflow.ellipsis,color: Color(0xFF333333),fontWeight: FontWeight.w400),)
         ],
       ),
