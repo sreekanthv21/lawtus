@@ -104,13 +104,14 @@ class generator1 extends ChangeNotifier{
   Map locationinfo={};
   List subjectnameinfo=[];
   Map facultyinfo={};
+  String thumbnail='';
   StreamSubscription? sub1;
 
   bool get isloading{
     if(hasbatchesloaded==true && hasfacultiesloaded==true){
       return false;
     }
-    return false;
+    return true;
   }
   bool hasbatchesloaded=false;
   bool hasfacultiesloaded=false;
@@ -120,12 +121,14 @@ class generator1 extends ChangeNotifier{
       sub1=FirebaseFirestore.instance.collection('batches').where('batch',isEqualTo: _course ).snapshots().listen((snapshot) {
         locationinfo=snapshot.docs[0].data()['matloc'];
         subjectnameinfo=snapshot.docs[0].data()['subjects'];
+        thumbnail=snapshot.docs[0].data()['thumbnail'];
         alertinfoUpdated.value = !alertinfoUpdated.value;
         hasbatchesloaded=true;
         notifyListeners();
       });
       
       final facultyinforaw=await FirebaseFirestore.instance.collection('faculties').get();
+    
       facultyinfo=facultyinforaw.docs[0].data();
       alertinfoUpdated.value = !alertinfoUpdated.value;
       hasfacultiesloaded=true;

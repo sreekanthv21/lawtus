@@ -85,6 +85,16 @@ class _lecturepageState extends State<lecturepage> {
                       
                       fit: BoxFit.cover,
                       'https://lawtusbackend.onrender.com/getimg?dir=${each['img']}',
+                      loadStateChanged: (state) {
+                        switch(state.extendedImageLoadState){
+                          case LoadState.loading:
+                          return Image.asset('lib/assets/image/loadinggrey.png',fit: BoxFit.cover,);
+                          case LoadState.completed:
+                          return null;
+                          case LoadState.failed:
+                          return Image.asset('lib/assets/image/loadinggrey.png',fit: BoxFit.cover,);
+                        }
+                      },
                     ),
                   ),
                 ),

@@ -248,13 +248,14 @@ Future<dynamic> dialogs(BuildContext context,{required String title,required Str
       width: eachone,
       child: Column(
         children: [
+          if((image is String))
           ExtendedImage.network(
             shape: BoxShape.circle,
             fit: BoxFit.cover,
             height: eachone,
             width: eachone,
             cache: false,
-            'https://lawtusbackend.onrender.com/getimg?dir=${image}',
+            'https://lawtusbackend.onrender.com/getimg?dir=$image',
             loadStateChanged: (state) {
               switch(state.extendedImageLoadState){
                 case LoadState.loading:
@@ -268,7 +269,18 @@ Future<dynamic> dialogs(BuildContext context,{required String title,required Str
             
           
           ),
-          SizedBox(height: 0,),
+          if((image is String)==false)
+          ExtendedImage.asset(
+            'lib/assets/image/loadinggrey.png',
+            shape: BoxShape.circle,
+            fit: BoxFit.cover,
+            height: eachone,
+            width: eachone,
+            
+          ),
+          
+          if((name is String)==false)
+          SizedBox(height: 5,),
           if((name is String)==false)
           Container(
             height: 20,
