@@ -173,9 +173,11 @@ class _SigninpageState extends State<Signinpage> {
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 50,),
-                              Text('Sign in to your Account',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 32,color: Colors.white),),
+                              Text('Sign in to your \nAccount',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 32,color: Colors.white),),
                               SizedBox(height: 30,)
                             ],
                           ),
