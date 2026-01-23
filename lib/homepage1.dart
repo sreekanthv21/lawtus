@@ -153,7 +153,7 @@ class _MyWidgetState extends State<homepage1> {
                                 builder: (context, value, child) {
                                   List selectedvids=[];
                                   Map videos= context.read<generator2>().gotinfo;
-                                  Map recwatched= context.read<generator2>().recwatchedinfo;
+                                  List recwatched= context.read<generator2>().recwatchedinfo['recwatched']??[];
                                   for(int i=0;i<videos.length;i++){
                                     if(videos[(i+1).toString()]['showinnew'] && videos[(i+1).toString()]['batch'].contains(userbox.get('batch')) ){
                                       selectedvids.add(videos[(i+1).toString()]);
@@ -168,7 +168,7 @@ class _MyWidgetState extends State<homepage1> {
                                       
                                       return Container(
                                         margin: EdgeInsets.symmetric(vertical: 10),
-                                        child: card1(each: reversedselvids[index], recwatchedinfo: recwatched['recwatched'],forlecturepage: 0,)
+                                        child: card1(each: reversedselvids[index], recwatchedinfo: recwatched,forlecturepage: 0,)
                                       );
                                     }
                                   );

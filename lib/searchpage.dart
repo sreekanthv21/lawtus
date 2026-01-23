@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lawtus/provider.dart';
 import 'package:lawtus/videopage.dart';
 import 'package:provider/provider.dart';
@@ -77,9 +78,17 @@ class _searchpageState extends State<searchpage> {
                   Map videos=context.read<generator2>().gotinfo;
                   List recwatchedinfo=context.read<generator2>().recwatchedinfo['recwatched'];
                   List filteredvids=[];
+                  List refinedvideoinfo=[];
                   for(int i=0;i<videos.length;i++){
-                    if((videos['${i+1}']['name'] as String).toLowerCase().contains(fieldtext.toLowerCase())||(videos['${i+1}']['subject'] as String).toLowerCase().contains(fieldtext.toLowerCase())){
-                      filteredvids.add(videos['${i+1}']);
+                    if((videos[(i+1).toString()]['batch']).contains(Hive.box('user').get('batch'))){
+                      
+                      refinedvideoinfo.add(videos[(i+1).toString()]);
+                    }
+                  }
+              
+                  for(int i=0;i<refinedvideoinfo.length;i++){
+                    if((refinedvideoinfo[i]['name'] as String).toLowerCase().contains(fieldtext.toLowerCase())||(refinedvideoinfo[i]['subject'] as String).toLowerCase().contains(fieldtext.toLowerCase())){
+                      filteredvids.add(refinedvideoinfo[i]);
                     }
                   }
                   filteredvids=filteredvids.reversed.toList();    
