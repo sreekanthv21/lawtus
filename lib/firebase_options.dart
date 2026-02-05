@@ -17,17 +17,29 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,47 +52,12 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAUXB1TQ6Yy8Fxe_HpgFb95ZpwTCYzWgkg',
-    appId: '1:19991173878:web:14e23c3cbb9c44f46faad7',
-    messagingSenderId: '19991173878',
-    projectId: 'lawtus-d033f',
-    authDomain: 'lawtus-d033f.firebaseapp.com',
-    storageBucket: 'lawtus-d033f.firebasestorage.app',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDKM1Xay-tjMQe0GUzQ3oQH2O3DTzZ9Mso',
-    appId: '1:19991173878:android:463b2e3ae5248b846faad7',
-    messagingSenderId: '19991173878',
-    projectId: 'lawtus-d033f',
-    storageBucket: 'lawtus-d033f.firebasestorage.app',
-  );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCJOaxnGDqoGrV-3D6GvWyl50VE8gUquYQ',
-    appId: '1:19991173878:ios:6ebae6991e13147a6faad7',
+    appId: '1:19991173878:ios:43cb310a6a8412236faad7',
     messagingSenderId: '19991173878',
     projectId: 'lawtus-d033f',
     storageBucket: 'lawtus-d033f.firebasestorage.app',
-    iosBundleId: 'com.example.lawtus',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCJOaxnGDqoGrV-3D6GvWyl50VE8gUquYQ',
-    appId: '1:19991173878:ios:6ebae6991e13147a6faad7',
-    messagingSenderId: '19991173878',
-    projectId: 'lawtus-d033f',
-    storageBucket: 'lawtus-d033f.firebasestorage.app',
-    iosBundleId: 'com.example.lawtus',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAUXB1TQ6Yy8Fxe_HpgFb95ZpwTCYzWgkg',
-    appId: '1:19991173878:web:77e974ce25b46e126faad7',
-    messagingSenderId: '19991173878',
-    projectId: 'lawtus-d033f',
-    authDomain: 'lawtus-d033f.firebaseapp.com',
-    storageBucket: 'lawtus-d033f.firebasestorage.app',
+    iosBundleId: 'com.lawtus.tutor',
   );
 }
