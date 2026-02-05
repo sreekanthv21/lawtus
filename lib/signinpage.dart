@@ -164,6 +164,7 @@ class _SigninpageState extends State<Signinpage> {
                   
                   children: [
                     Container(
+                      alignment: Alignment.bottomLeft,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -173,12 +174,10 @@ class _SigninpageState extends State<Signinpage> {
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 50,),
-                              Text('Sign in to your \nAccount',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 32,color: Colors.white),),
-                              SizedBox(height: 30,)
+                              SizedBox(height: 70,),
+                              Text('Sign in to your \nAccount',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 32,color: Colors.white),),                             
                             ],
                           ),
                         ),
@@ -193,7 +192,7 @@ class _SigninpageState extends State<Signinpage> {
                             SizedBox(height: 30,),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text('Email',style: TextStyle(fontSize: 14,color: Color(0xFF6C7278)),)),
+                              child: Text('Username',style: TextStyle(fontSize: 14,color: Color(0xFF6C7278)),)),
                             TextField(
                               cursorColor: const Color.fromARGB(255, 116, 116, 116),
                               controller: cont1,
