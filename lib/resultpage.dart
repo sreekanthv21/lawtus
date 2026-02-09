@@ -310,6 +310,7 @@ class _resultsState extends State<results> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 10,),
                    
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 0),
@@ -333,7 +334,7 @@ class _resultsState extends State<results> {
                                     alignment: Alignment.center,
                                     
                                     padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
-                                    child: Text(widget.questioninfo[selectedquestion.value.toString()]['question'],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24,color: Color(0xFF3C3A36)),overflow: TextOverflow.visible,maxLines: 5,),),
+                                    child: Text(widget.questioninfo[selectedquestion.value.toString()]['question'],style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24,color: Color(0xFF3C3A36)),overflow: TextOverflow.visible,maxLines: 5,textAlign: TextAlign.center,),),
                                 )
                               ],
                             ),
@@ -360,7 +361,7 @@ class _resultsState extends State<results> {
                                       children: [
                                         Text('${optionabcd[index]} . ',style: TextStyle(color: Color(0xFF3C3A36),fontSize: 16),),
                                         SizedBox(width: 5,),
-                                        Text(widget.questioninfo[selectedquestion.value.toString()][(index+1).toString()],style: TextStyle(color: Color(0xFF3C3A36)),),
+                                        Expanded(child: Text(widget.questioninfo[selectedquestion.value.toString()][(index+1).toString()],style: TextStyle(color: Color(0xFF3C3A36)),overflow: TextOverflow.visible,)),
                                       ],
                                     ),
                                   );
