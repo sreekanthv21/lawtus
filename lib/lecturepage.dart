@@ -206,59 +206,61 @@ class _lecturepageState extends State<lecturepage> {
                         scrollDirection: Axis.horizontal,
                         physics: BouncingScrollPhysics(),
                         children: [
-                          Column(
-                            children: [
-                              
-                              
-                              Container(
+                          SingleChildScrollView(
+                            child: Column(
+                              children: [
                                 
-                                child: ValueListenableBuilder(
-                                  valueListenable: selectedvideo,
-                                  builder: (context, value, child) {
-                                    return ValueListenableBuilder(
-                                      valueListenable: context.read<generator2>().videoinfoUpdated,
-                                      builder: (context, value, child) {
-                                        final videoinfo=context.read<generator2>().gotinfo;
-                                        final recwatchedinfo=(context.read<generator2>().recwatchedinfo)['recwatched']??[];
-                                      
-                                        List refinedvideoinfo=[];
-                                        for(int i=0;i<videoinfo.length;i++){
-                                          if(videoinfo[(i+1).toString()]['subject']==widget.subject && (videoinfo[(i+1).toString()]['batch']).contains(Hive.box('user').get('batch'))){
-                                            
-                                            refinedvideoinfo.add(videoinfo[(i+1).toString()]);
-                                          }
-                                        }
-                                        List refinedvideoinforeversed=refinedvideoinfo.reversed.toList();
-
-                                        if(context.read<generator2>().isLoading){
-                                          return CircularProgressIndicator();
-                                        }
-                                        else if(refinedvideoinfo.isEmpty){
-                                          return Expanded(child: Center(child: Text('No lectures',style: TextStyle(color: Color(0xFF3C3A36)),)));
-                                        }
-                                        return Column(
-                                          children: List.generate(
-                                            refinedvideoinforeversed.length,
-                                            (index){
-                                              Map each=refinedvideoinforeversed[index];
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  selectedvideo.value=[each,recwatchedinfo];
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 5),
-                                                  child: conttoshow(each, containerwidth,recwatchedinfo),
-                                                )
-                                              );
+                                
+                                Container(
+                                  
+                                  child: ValueListenableBuilder(
+                                    valueListenable: selectedvideo,
+                                    builder: (context, value, child) {
+                                      return ValueListenableBuilder(
+                                        valueListenable: context.read<generator2>().videoinfoUpdated,
+                                        builder: (context, value, child) {
+                                          final videoinfo=context.read<generator2>().gotinfo;
+                                          final recwatchedinfo=(context.read<generator2>().recwatchedinfo)['recwatched']??[];
+                                        
+                                          List refinedvideoinfo=[];
+                                          for(int i=0;i<videoinfo.length;i++){
+                                            if(videoinfo[(i+1).toString()]['subject']==widget.subject && (videoinfo[(i+1).toString()]['batch']).contains(Hive.box('user').get('batch'))){
+                                              
+                                              refinedvideoinfo.add(videoinfo[(i+1).toString()]);
                                             }
-                                          ),
-                                        );
-                                      }
-                                    );
-                                  }
+                                          }
+                                          List refinedvideoinforeversed=refinedvideoinfo.reversed.toList();
+                            
+                                          if(context.read<generator2>().isLoading){
+                                            return CircularProgressIndicator();
+                                          }
+                                          else if(refinedvideoinfo.isEmpty){
+                                            return Expanded(child: Center(child: Text('No lectures',style: TextStyle(color: Color(0xFF3C3A36)),)));
+                                          }
+                                          return Column(
+                                            children: List.generate(
+                                              refinedvideoinforeversed.length,
+                                              (index){
+                                                Map each=refinedvideoinforeversed[index];
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    selectedvideo.value=[each,recwatchedinfo];
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 5),
+                                                    child: conttoshow(each, containerwidth,recwatchedinfo),
+                                                  )
+                                                );
+                                              }
+                                            ),
+                                          );
+                                        }
+                                      );
+                                    }
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         
                         ChangeNotifierProvider.value(value: generator3(),child: popuppages(dir: widget.location))
