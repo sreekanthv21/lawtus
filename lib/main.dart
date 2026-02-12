@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lawtus/signinpage.dart';
 import 'firebase_options.dart';
 
+import 'package:flutter/services.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,10 @@ void main()async {
   await Hive.openBox('answers');
   await Hive.openBox('time');
 
-  
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   runApp(const MyApp());
 }
 
