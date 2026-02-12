@@ -24,12 +24,12 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
+          'DefaultFirebaseOptions have not been configured for ios - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
-      case TargetPlatform.iOS:
-        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -52,12 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCJOaxnGDqoGrV-3D6GvWyl50VE8gUquYQ',
-    appId: '1:19991173878:ios:43cb310a6a8412236faad7',
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyDKM1Xay-tjMQe0GUzQ3oQH2O3DTzZ9Mso',
+    appId: '1:19991173878:android:be35393ab54251ce6faad7',
     messagingSenderId: '19991173878',
     projectId: 'lawtus-d033f',
     storageBucket: 'lawtus-d033f.firebasestorage.app',
-    iosBundleId: 'com.lawtus.tutor',
   );
 }
